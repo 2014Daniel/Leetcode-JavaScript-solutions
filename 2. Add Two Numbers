@@ -1,0 +1,46 @@
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} l1
+ * @param {ListNode} l2
+ * @return {ListNode}
+ */
+var addTwoNumbers = function(l1, l2) {
+    if (!l1) {
+        return l2;
+    }
+    if (!l2) {
+        return l1;
+    }
+    var result = new ListNode(0);
+    var cur = result;
+    var carryover = 0;
+    
+    while (l1 || l2) {
+        var digit1 = 0;
+        var digit2 = 0;
+        if (l1) {
+            digit1 = l1.val;
+            l1 = l1.next;
+        }
+        if (l2) {
+            digit2 = l2.val;
+            l2 = l2.next;
+        }
+        var newDigit = (digit1 + digit2 + carryover) % 10;
+        carryover = Math.floor( (digit1 + digit2 + carryover) / 10);
+        cur.next = new ListNode(newDigit);
+        cur = cur.next;
+    }
+    
+    if (carryover) {
+        cur.next = new ListNode(carryover);
+    }
+    
+    return result.next;
+};
